@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Information System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .stats {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .order-list {
+            list-style: none;
+            padding: 0;
+        }
+        .order-item {
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            border-radius: 4px;
+        }
+        .order-link {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .order-link:hover {
+            color: #0056b3;
+        }
+        .order-meta {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .no-orders {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📦 Order Information System</h1>
+        
+        <div class="stats">
+            <strong>Total Orders:</strong> {{.OrderCount}}
+        </div>
+
+        {{if .Orders}}
+        <ul class="order-list">
+            {{range .Orders}}
+            <li class="order-item">
+                <a class="order-link" href="/order/{{.OrderUID}}">
+                    Order: {{.OrderUID}}
+                </a>
+                <div class="order-meta">
+                    <strong>Track Number:</strong> {{.TrackNumber}} | 
+                    <strong>Entry:</strong> {{.Entry}} | 
+                    <strong>Created:</strong> {{.DateCreated}}
+                </div>
+            </li>
+            {{end}}
+        </ul>
+        {{else}}
+        <div class="no-orders">
+            <h3>No orders found</h3>
+            <p>Orders will appear here after they are received via NATS</p>
+        </div>
+        {{end}}
+    </div>
+</body>
+</html>

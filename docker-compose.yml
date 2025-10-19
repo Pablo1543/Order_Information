@@ -1,0 +1,67 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: order_postgres
+    environment:
+      POSTGRES_USER: orderapp
+      POSTGRES_PASSWORD: orderpass
+      POSTGRES_DB: orders_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orderapp -d orders_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  nats:
+    image: nats-streaming:latest
+    container_name: order_nats
+    command: ["-p", "4222", "-m", "8222", "-cid", "cluster1"]
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+
+  app:
+    build: .
+    container_name: order_service
+    depends_on:
+      postgres:
+        condition: service_healthy
+      nats:
+        condition: service_started
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: orderapp
+      DB_PASSWORD: orderpass
+      DB_NAME: orders_db
+      NATS_URL: nats://nats:4222
+      CLUSTER_ID: cluster1
+    ports:
+      - "8080:8080"
+    restart: always
+
+
+  publisher:
+    build: .
+    container_name: order_publisher
+    command: ["/app/publisher", "/app/model.json"]
+    depends_on: 
+      nats: 
+        condition: service_started
+    environment:
+      NATS_URL: nats://nats:4222
+      CLUSTER_ID: cluster1
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: orderapp
+      DB_PASSWORD: orderpass
+      DB_NAME: orders_db
+    restart: on-failure
+
+volumes:
+  pgdata:
