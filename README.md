@@ -6,10 +6,11 @@
 **Разработан на Go (Golang)**  
 
 [![Go](https://img.shields.io/badge/Go-1.21+-00ADD8?style=for-the-badge&logo=go&logoColor=white)](https://golang.org/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
 [![Docker](https://img.shields.io/badge/Docker-28.5.1-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Gin](https://img.shields.io/badge/Gin%20Framework-1.9.1-009688?style=for-the-badge&logo=go&logoColor=white)](https://gin-gonic.com/)
-[![Swagger](https://img.shields.io/badge/Swagger-3.0-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)](https://swagger.io/)
+[![NATS](https://img.shields.io/badge/NATS%20Streaming-2.10+-27AE60?style=for-the-badge)](https://docs.nats.io/nats-streaming-concepts/intro)
+[![Docker Compose](https://img.shields.io/badge/Docker%20Compose-2.40.0-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docs.docker.com/compose/)
 
 • [Особенности](#особенности) • [Установка](#локальная-установка) • [Запуск через контейнер](#запуск-через-контейнер) • [Добавление заказа](#добавление-нового-заказа) • [Проверки](#проверить-можно-следующими-способами)
 
@@ -81,7 +82,10 @@ docker-compose up --build
 ## Добавление нового заказа
 
 ```bash
-# Создать JSON файл с заказом в новом терминале
+# Запустить новый терминал и перейти в каталог
+cd ./Order_Information
+
+# Создать JSON файл с заказом
 cat > new_order.json << 'EOF'
 {
   "order_uid": "test_new_order",
