@@ -1,6 +1,6 @@
 <div align="center">
 
-# Order Information Service
+# Order Information System
 
 **Микросервис для просмотра информацией о заказах с REST API**  
 **Разработан на Go (Golang)**  
@@ -67,12 +67,14 @@ go mod download
 
 # Запускаем приложение
 go run cmd/api/main.go
+```
 
 ### Запуск через контейнер
 
 ```bash
 # Запуск с Docker Compose
 docker-compose up --build
+```
 
 ### Добавление нового заказа
 
@@ -135,6 +137,7 @@ docker cp new_order.json order_service:/app/
 
 # Запустить publisher из контейнера app
 docker exec order_service /app/publisher /app/new_order.json
+```
 
 ### Проверить можно следующими способами
 
@@ -143,3 +146,4 @@ docker exec order_service /app/publisher /app/new_order.json
 docker logs order_service
 # Проверить в браузере
 curl http://localhost:8080/
+```
