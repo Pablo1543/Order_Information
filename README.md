@@ -74,6 +74,10 @@ go run cmd/api/main.go
 ## Запуск через контейнер
 
 ```bash
+# Клонируем репозиторий
+git clone https://github.com/Pablo1543/Order_Information.git
+cd Order_Information
+
 # Запуск с Docker Compose
 docker-compose up --build
 ```
@@ -81,7 +85,7 @@ docker-compose up --build
 ## Добавление нового заказа
 
 ```bash
-# Запустить новый терминал и перейти в каталог
+# Запустить новый терминал и перейти в каталог проекта
 cd ./Order_Information
 
 # Создать JSON файл с заказом
@@ -149,6 +153,7 @@ docker exec order_service /app/publisher /app/new_order.json
 ```bash
 # Посмотреть логи app
 docker logs order_service
+
 # Проверить в браузере
 curl http://localhost:8080/
 ```
